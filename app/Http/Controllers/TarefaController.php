@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Tarefa;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TarefaController extends Controller
 {
-
-    public function __construct()
-    {
-        //$this->middleware('auth');
+    public function __construct() {
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -20,25 +17,7 @@ class TarefaController extends Controller
      */
     public function index()
     {
-       /* if(auth()->check()){
-            $id = auth()->user()->id;
-            $nome = auth()->user()->name;
-            $email = auth()->user()->email;
-            return "Nome $nome | Email: $email";
-
-        }else{
-            return "Você não está autenticado no sistema";
-        }*/
-         if(Auth::check()){
-            $id = Auth::user()->id;
-            $nome = Auth::user()->name;
-            $email = Auth::user()->email;
-            return "Nome $nome | Email: $email";
-
-        }else{
-            return "Você não está autenticado no sistema";
-        }
-       
+        return 'Chegamos até aqui';
     }
 
     /**
@@ -48,7 +27,7 @@ class TarefaController extends Controller
      */
     public function create()
     {
-        //
+        return view('tarefa.create');
     }
 
     /**
@@ -59,7 +38,8 @@ class TarefaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tarefa = Tarefa::create($request->all());
+        return redirect()->route('tarefa.show', ['tarefa' => $tarefa->id]);
     }
 
     /**
@@ -70,7 +50,7 @@ class TarefaController extends Controller
      */
     public function show(Tarefa $tarefa)
     {
-        //
+        dd($tarefa->getAttributes());
     }
 
     /**
